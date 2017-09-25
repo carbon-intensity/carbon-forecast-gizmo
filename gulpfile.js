@@ -17,7 +17,7 @@ const uglify     = require('gulp-uglifyjs');
 // Config
 // -----------------------------------------------------------------------------
 const buildFolder = './build/';
-const gizmoVersion = '1.0.10--beta'; // for versioning in Cloudfront and Google Analytics
+const gizmoVersion = '1.0.12--beta'; // for versioning in Cloudfront and Google Analytics
 
 
 // Watch JavaScript and pug template files, then build the pages on changes

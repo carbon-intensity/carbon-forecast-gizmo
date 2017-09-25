@@ -58,10 +58,10 @@ html
             }
             .timestamp {
                 font-size  : 0.8em;
-                height     : 4.5em;
+                height     : 5.25em;
                 margin     : 0 0 0.25em 0;
                 overflow   : hidden;
-                text-align : center
+                text-align : center;
             }
 
             time {
@@ -149,11 +149,6 @@ html
             ga.l =+ new Date;
             ga('create', 'UA-106816347-2', 'auto', 'nationalGrid');
             ga('create', 'UA-32175-1',     'auto', 'wwf');
-            //- ga('nationalGrid.send', 'screenview', {
-            //-     screenName : 'default',
-            //-     appName: 'carbon forecast gizmo',
-            //-     appVersion: '#{version}',
-            //- });
             ga('nationalGrid.send', 'pageview');
             ga('wwf.send', 'pageview');
         script(src="https://www.google-analytics.com/analytics.js" async)

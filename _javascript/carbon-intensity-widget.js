@@ -90,11 +90,11 @@
                 template.setAttributeNS (null, 'width', boxWidth);
                 template.setAttributeNS (null, 'height', boxHeight);
                 template.setAttributeNS(null, 'class', 'icon--plug');
-                template.innerHTML = '<g fill=\'none\' fill-rule=\'evenodd\'>'
-                                    + '<path d=\'M24.5 59V41.5M14 22V0M36 22V0\' stroke=\'' + colour + '\' stroke-width=\'9\' fill=\'' + colour + '\'/>'
-                                    + '<path d=\'M.005 16c-.003.166-.005.333-.005.5C0 30.583 10.97 42 24.5 42S49 30.583 49 16.5c0-.167-.002-.334-.005-.5H.005z\' fill=\'' + colour + '\' />'
-                                  + '</g>'
-                                + '</svg>';
+                template.innerHTML = `<g fill="none" fill-rule="evenodd">
+                                        <path d="M24.5 59V41.5M14 22V0M36 22V0" stroke="${colour}" stroke-width="9" fill="${colour}"/>
+                                        <path d="M.005 16c-.003.166-.005.333-.005.5C0 30.583 10.97 42 24.5 42S49 30.583 49 16.5c0-.167-.002-.334-.005-.5H.005z" fill="${colour}" />
+                                        </g>
+                                    </svg>`;
 
             return [ template,  document.createTextNode(message) ];
         };
@@ -177,59 +177,59 @@
         time[highest].parentElement.parentElement.style.backgroundColor = '#ffd3da';
     };
 
-        let carbonForecasts = document.getElementsByClassName('carbon-forecast');
-        for (let i = 0; i < carbonForecasts.length; i++) {
-            let start;
+    let carbonForecasts = document.getElementsByClassName('carbon-forecast');
 
-            let end;
-            let timeFormat = 'YYYY-MM-DD\THH\:mm';
-            let duration;
-            let timeBlock = 2;
-            // if (carbonForecasts[i].getAttribute('data-from')) {
-            //     duration = carbonForecasts[i].getAttribute('data-duration');
-            // }
-            // else {
-                duration = 24;
-            // }
+    for (let i = 0; i < carbonForecasts.length; i++) {
+        let start;
+        let end;
+        let timeFormat = 'YYYY-MM-DD\THH\:mm';
+        let duration = 24;
+        let timeBlock = 2;
 
-            if (carbonForecasts[i].getAttribute('data-from')) {
-                start = moment(carbonForecasts[i].getAttribute('data-from') ).startOf('hour').tz('UTC').format(timeFormat);
+        // if (carbonForecasts[i].getAttribute('data-duration')) {
+        //     duration = carbonForecasts[i].getAttribute('data-duration');
+        // }
+        // else {
+            // duration = 24;
+        // }
+
+        if (carbonForecasts[i].getAttribute('data-from')) {
+            start = moment(carbonForecasts[i].getAttribute('data-from') ).startOf('hour').tz('UTC').format(timeFormat);
+        }
+        else {
+            let timeInUTC = moment().startOf('hour').tz('UTC');
+            let timeLocal = moment().startOf('hour').tz('Europe/London');
+            let localHour = timeLocal.format('HH');
+            let UTCHour = timeInUTC.format('HH');
+            let roundedHour;
+
+            if (parseInt(localHour) % 2 === 0) {
+                // is even
+                roundedHour = parseInt(UTCHour);
             }
             else {
-                let timeInUTC = moment().startOf('hour').tz('UTC');
-                let timeLocal = moment().startOf('hour').tz('Europe/London');
-                let localHour = timeLocal.format('HH');
-                let UTCHour = timeInUTC.format('HH');
-                let roundedHour;
-
-                if (parseInt(localHour) % 2 === 0) {
-                    // is even
-                    roundedHour = parseInt(UTCHour);
-                }
-                else {
-                    // is odd
-                    roundedHour = parseInt(UTCHour) - 1;
-                }
-
-                start = timeInUTC.format('YYYY-MM-DD\T') + leadingZero(roundedHour) + ':00';
+                // is odd
+                roundedHour = parseInt(UTCHour) - 1;
             }
-            end = moment(start).add(duration, 'hours').tz('UTC').format(timeFormat);
-            createPlaceholders(carbonForecasts[i], duration / timeBlock);
 
-            let request = new XMLHttpRequest();
-                request.open('GET', 'https://k1nehbcl85.execute-api.eu-west-2.amazonaws.com/v1/intensity/stats/' + start + '/' + end + '/' + timeBlock, true);
-                request.onreadystatechange = function() {
-                    if (this.readyState === 4) {
-                        if (this.status >= 200 && this.status < 400) {
-                            let response = JSON.parse(this.responseText);
-                            populatePlaceholders(carbonForecasts[i], response.data);
-                        } else {
-                            // Error :(
-                        }
-                    }
-                };
-                request.send();
-                request = null;
+            start = timeInUTC.format('YYYY-MM-DD\T') + leadingZero(roundedHour) + ':00';
         }
+        end = moment(start).add(duration, 'hours').tz('UTC').format(timeFormat);
+        createPlaceholders(carbonForecasts[i], duration / timeBlock);
 
+        let request = new XMLHttpRequest();
+            request.open('GET', 'https://k1nehbcl85.execute-api.eu-west-2.amazonaws.com/v1/intensity/stats/' + start + '/' + end + '/' + timeBlock, true);
+            request.onreadystatechange = function() {
+                if (this.readyState === 4) {
+                    if (this.status >= 200 && this.status < 400) {
+                        let response = JSON.parse(this.responseText);
+                        populatePlaceholders(carbonForecasts[i], response.data);
+                    } else {
+                        // Error :(
+                    }
+                }
+            };
+            request.send();
+            request = null;
+    }
 })(document, window);
