@@ -64,8 +64,9 @@
                     `<div class="hour">
                         <p class="timestamp"><time></time></p>
                         <svg class="inactive icon--house" width="149" height="146" viewBox="0 0 149 146" xmlns="http://www.w3.org/2000/svg">
-                            <title>House</title>
-                            <path d="M26 53.196L3 77h23v66h98V77h22L74.5 3 44 34.566V16H26v37.196z" stroke="#676767" stroke-width="7" fill="#fff" fill-rule="evenodd" stroke-linejoin="round" />
+                            <path d="M26 53.196L3 77h23v66h98V77h22L74.5 3 44 34.566V16H26v37.196z" stroke="#676767" stroke-width="7" fill="rgba(255,255,255,1)" fill-rule="evenodd" stroke-linejoin="round">
+                                <title>House</title>
+                            </path>
                             <text x="59" y="105" font-family="'Open Sans', sans-serif" font-size="40" fill="#000"></text>
                         </svg>
                     </div>`;
