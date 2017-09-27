@@ -39,11 +39,11 @@
                 number: 0,
                 letter: 'VL'
             };
-        };
+        }
     };
 
     let todayOrTomorrow = (time) => {
-        let tomorrow = moment().endOf('day');;
+        let tomorrow = moment().endOf('day');
         if (moment(time).isSameOrBefore(tomorrow)) {
             return 'today';
         }
@@ -58,21 +58,21 @@
             placeholderWrapper.style.width = ( (7 * amount) * 16 ) + 'px';
             document.querySelector('.logos').style.maxWidth = ( (7 * amount) * 16 ) + 'px';
 
-            let placeholders = ''
-            for (let a = 0; a < amount; a++) {
-                placeholders +=
-                    `<div class="hour">
-                        <p class="timestamp"><time></time></p>
-                        <svg class="inactive icon--house" width="149" height="146" viewBox="0 0 149 146" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M26 53.196L3 77h23v66h98V77h22L74.5 3 44 34.566V16H26v37.196z" stroke="#676767" stroke-width="7" fill="rgba(255,255,255,1)" fill-rule="evenodd" stroke-linejoin="round">
-                                <title>House</title>
-                            </path>
-                            <text x="59" y="105" font-family="'Open Sans', sans-serif" font-size="40" fill="#000"></text>
-                        </svg>
-                    </div>`;
-            }
-            placeholderWrapper.innerHTML += placeholders;
+        let placeholders = '';
 
+        for (let a = 0; a < amount; a++) {
+            placeholders +=
+                `<div class="hour">
+                    <p class="timestamp"><time></time></p>
+                    <svg class="inactive icon--house" width="149" height="146" viewBox="0 0 149 146" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M26 53.196L3 77h23v66h98V77h22L74.5 3 44 34.566V16H26v37.196z" stroke="#676767" stroke-width="7" fill="rgba(255,255,255,1)" fill-rule="evenodd" stroke-linejoin="round">
+                            <title>House</title>
+                        </path>
+                        <text x="59" y="105" font-family="'Open Sans', sans-serif" font-size="40" fill="#000"></text>
+                    </svg>
+                </div>`;
+        }
+        placeholderWrapper.innerHTML += placeholders;
         target.appendChild(placeholderWrapper);
     };
 
@@ -100,36 +100,38 @@
             return [ template,  document.createTextNode(message) ];
         };
 
+        for (let b = 0; b < data.length; b++) {
+            time[b].appendChild(
+                document.createTextNode(
+                    moment(data[b].from).tz('Europe/London').format('ha') + ' - ' + moment(data[b].to).tz('Europe/London').format('ha')
+                )
+            );
+        }
+
         let tomorrowCounter = false;
         for (let b = 0; b < data.length; b++) {
-            // console.log(data[b].from, moment(data[b].from).tz('Europe/London').format('ha'), todayOrTomorrow(data[b].from));
-            let day = "";
+            // console.log(
+            //     data[b].from,
+            //     moment(data[b].from).tz('Europe/London').format('YYYYMMDD hh:mm'),
+            //     moment(data[b].from).tz('UTC').format('YYYYMMDD hh:mm'),
+            //     todayOrTomorrow(data[b].from)
+            // );
 
-            if (tomorrowCounter === false) {
-                if (todayOrTomorrow(data[b].from) === 'tomorrow') {
-                    tomorrowCounter = true;
+            if( b > 0) {
+                let thisHour = moment(data[b].from).tz('Europe/London').format('YYYYMMDD');
+                let previousHour = moment(data[b - 1].from).tz('Europe/London').format('YYYYMMDD');
+                if ( thisHour !== previousHour ) {
                     try {
                         svg[b].parentElement.style.borderLeft = '2px dotted #999';
+                        let day = document.createElement('b');
+                        let dayText = document.createTextNode( moment(data[b].from).tz('Europe/London').format('dddd') );
+                        day.appendChild( dayText );
+                        time[b].appendChild(day);
                     }
                     catch(e) {
                         console.warn(e);
                     }
-                    day = document.createElement('b');
-                    let dayText = document.createTextNode( moment(data[b].from).tz('Europe/London').format('dddd') );
-                    day.appendChild( dayText );
                 }
-            }
-
-            time[b].appendChild(
-                document.createTextNode(
-                    moment(data[b].from).tz('Europe/London').format('ha')
-                    + ' - '
-                    + moment(data[b].to).tz('Europe/London').format('ha')
-                )
-            );
-
-            if (day !== "") {
-                time[b].appendChild(day);
             }
         }
 
@@ -142,14 +144,14 @@
                 }
                 else if ( data[c].intensity.average > data[highest].intensity.average) {
                     highest = c;
-                };
+                }
 
                 if (lowest === 'uninitiated') {
                     lowest = c;
                 }
                 else if ( data[c].intensity.average < data[lowest].intensity.average) {
                     lowest = c;
-                };
+                }
 
                 svg[c].querySelector('path').style.stroke = banding.colour;
                 svg[c].querySelector('title').innerHTML = data[c].intensity.average + 'g CO₂ per kWh';
@@ -159,9 +161,9 @@
             }
             catch (error) {
                 if (error) {
-                    console.warn(error)
+                    console.warn(error);
                     time[c].appendChild( document.createTextNode(' (Forecast not yet available)') );
-                    svg[c].querySelector('text').appendChild(document.createTextNode('?'))
+                    svg[c].querySelector('text').appendChild(document.createTextNode('?'));
                     svg[c].querySelector('text').style.fill = '#ccc';
                     throw error;
                 }
@@ -184,15 +186,22 @@
         let start;
         let end;
         let timeFormat = 'YYYY-MM-DD\THH\:mm';
-        let duration = 24;
+        let duration;
         let timeBlock = 2;
 
-        // if (carbonForecasts[i].getAttribute('data-duration')) {
-        //     duration = carbonForecasts[i].getAttribute('data-duration');
-        // }
-        // else {
-            // duration = 24;
-        // }
+        if (carbonForecasts[i].getAttribute('data-duration')) {
+            duration = carbonForecasts[i].getAttribute('data-duration');
+        }
+        else {
+            duration = 24;
+        }
+
+        if (duration < 4) {
+            duration = 4;
+        }
+        else if (duration > 48) {
+            duration = 48;
+        }
 
         if (carbonForecasts[i].getAttribute('data-from')) {
             start = moment(carbonForecasts[i].getAttribute('data-from') ).startOf('hour').tz('UTC').format(timeFormat);
@@ -219,7 +228,7 @@
         createPlaceholders(carbonForecasts[i], duration / timeBlock);
 
         let request = new XMLHttpRequest();
-            request.open('GET', 'https://k1nehbcl85.execute-api.eu-west-2.amazonaws.com/v1/intensity/stats/' + start + '/' + end + '/' + timeBlock, true);
+            request.open('GET', `https://k1nehbcl85.execute-api.eu-west-2.amazonaws.com/v1/intensity/stats/${start}/${end}/${timeBlock}`, true);
             request.onreadystatechange = function() {
                 if (this.readyState === 4) {
                     if (this.status >= 200 && this.status < 400) {

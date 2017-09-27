@@ -9,6 +9,7 @@ const debug = require('gulp-debug');
 const awspublish = require('gulp-awspublish');
 const babel      = require('gulp-babel');
 const htmlmin    = require('gulp-htmlmin');
+const jshint     = require('gulp-jshint');
 const pug        = require('gulp-pug');
 const rename     = require('gulp-rename');
 const rev        = require('gulp-rev');
@@ -59,21 +60,25 @@ gulp.task('build:pages', ['compile:javascript'], () => {
 });
 
 gulp.task('compile:javascript', () => {
-    return gulp.src('_javascript/carbon-intensity-widget.js')
-        .pipe(sourcemaps.init())
-        .pipe(babel({
+    return gulp.src(['_javascript/carbon-intensity-widget.js'])
+        .pipe( jshint({
+            esversion: 6
+        }) )
+        .pipe( jshint.reporter('jshint-stylish', { beep: true }) )
+        .pipe( sourcemaps.init())
+        .pipe( babel({
             presets: ['env']
-        }))
-        .pipe(uglify())
-        .pipe(sourcemaps.write('./'))
-        .pipe(rename( (path) => {
+        }) )
+        .pipe( uglify() )
+        .pipe( sourcemaps.write('./') )
+        .pipe( rename( (path) => {
             path.basename += ".min";
-        }))
-        .pipe(gulp.dest(buildFolder + 'javascript'))
-        .pipe(rev())
-        .pipe(gulp.dest(buildFolder + 'javascript'))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest('./'));
+        }) )
+        .pipe( gulp.dest(buildFolder + 'javascript') )
+        .pipe( rev() )
+        .pipe( gulp.dest(buildFolder + 'javascript') )
+        .pipe( rev.manifest() )
+        .pipe( gulp.dest('./') );
 });
 
 gulp.task('test', () => {
@@ -120,7 +125,7 @@ gulp.task('publish', ['build:pages'], () => {
         // Print upload updates to console.
         .pipe(awspublish.reporter());
 
-    gulp.src( buildFolder + '**/*.html')
+    gulp.src( buildFolder + '**/*.*')
         .pipe(rename(function (path) {
             path.dirname = gizmoVersion + '/' + path.dirname;
         }))
