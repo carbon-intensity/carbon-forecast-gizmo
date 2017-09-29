@@ -2,6 +2,8 @@
 
 ![](screenshot.png)
 
+[![Powered by electricity](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
+
 ## Use
 
 To add this on your site, use the following snippet:
