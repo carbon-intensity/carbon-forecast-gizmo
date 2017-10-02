@@ -69,11 +69,11 @@ gulp.task('compile:javascript', () => {
         .pipe( babel({
             presets: ['env']
         }) )
-        .pipe( uglify() )
+        // .pipe( uglify() )
         .pipe( sourcemaps.write('./') )
-        .pipe( rename( (path) => {
-            path.basename += ".min";
-        }) )
+        // .pipe( rename( (path) => {
+        //     path.basename += ".min";
+        // }) )
         .pipe( gulp.dest(buildFolder + 'javascript') )
         .pipe( rev() )
         .pipe( gulp.dest(buildFolder + 'javascript') )
@@ -103,12 +103,6 @@ gulp.task('publish', ['build:pages'], () => {
         {
             cacheFileName: './.aws-publish-cache'
         });
-
-    // Define any custom headers
-    // -------------------------------------------------------------------------
-    let headers = {
-        'Cache-Control': 'max-age=315360000, no-transform, public'
-    };
 
     gulp.src( buildFolder + '**/*.js')
         .pipe(rename(function (path) {

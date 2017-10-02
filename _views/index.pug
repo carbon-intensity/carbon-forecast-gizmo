@@ -154,7 +154,7 @@ html
             ga('wwf.send', 'pageview');
         script(src="https://www.google-analytics.com/analytics.js" async)
     body
-        div.carbon-forecast(data-duration="48")
+        div.carbon-forecast(data-duration="24")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha384-DRe+1gYJauFEenXeWS8TmYdBmDUqnR5Rcw7ax4KTqOxXWd4NAMP2VPU5H69U7yP9" crossorigin="anonymous")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data.min.js" integrity="sha384-a19nqPcjI4VRujfMuep31uOtcuYkaxuWmB2bd/f0jeeOU5X/ecDtl/sElehICzv3" crossorigin="anonymous")
         //- link(href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet")
@@ -174,7 +174,7 @@ html
                         <path d="M389.7 436.8h2.1l3.2 5.2h2l-3.5-5.4c1.8-.2 3.2-1.2 3.2-3.3 0-2.4-1.4-3.5-4.2-3.5h-4.7V442h1.9v-5.2m0-1.6v-3.8h2.5c1.3 0 2.6.3 2.6 1.8 0 1.9-1.4 2-3 2h-2.1z"/>
                     </g>
                 </svg>
-        script(src="javascript/carbon-intensity-widget.min.js")
+        script(src="javascript/carbon-intensity-widget.js")
 
         //- Have to use HTML format comments, as Pug doesn't support variables in Pug (//) comments.
         <!-- #{timestamp} -->
