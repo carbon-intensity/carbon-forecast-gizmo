@@ -117,7 +117,7 @@
             //     todayOrTomorrow(data[b].from)
             // );
 
-            if( b > 0) {
+            if( b >= 1) {
                 let thisHour = moment(data[b].from).tz('Europe/London').format('YYYYMMDD');
                 let previousHour = moment(data[b - 1].from).tz('Europe/London').format('YYYYMMDD');
                 if ( thisHour !== previousHour ) {
