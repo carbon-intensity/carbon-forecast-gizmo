@@ -5,28 +5,28 @@
     };
 
     let createBanding = function(amount) {
-         if ( amount > 400) {
+         if ( amount > 380) {
             return {
                 colour: '#EE3350',
                 number: 8,
                 letter: 'VH'
             };
         }
-        else if ( amount > 300) {
+        else if ( amount > 280) {
             return {
                 colour: '#F89834',
                 number: 6,
                 letter: 'H'
             };
         }
-        else if ( amount > 200) {
+        else if ( amount > 180) {
             return {
-                colour: '#FFE600   ',
+                colour: '#FFE600',
                 number: 4,
                 letter: 'M'
             };
         }
-        else if ( amount > 100) {
+        else if ( amount > 80) {
             return {
                 colour: '#74C050',
                 number: 2,
