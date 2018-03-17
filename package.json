@@ -15,7 +15,7 @@
     "gulp": "^3.9.1",
     "gulp-awspublish": "^3.3.0",
     "gulp-babel": "^7.0.0",
-    "gulp-htmlmin": "^3.0.0",
+    "gulp-htmlmin": "^4.0.0",
     "gulp-jshint": "^2.0.4",
     "gulp-jslint": "^1.0.10",
     "gulp-pug": "^3.3.0",
