@@ -12,7 +12,7 @@ const leadingZero = function (n) {
 
 const whatIsTheTimeInTheUK = () => {
 	let unixNow = Date.now(); // To ensure that the time in Unix time, which is based on UTC.
-	console.log(unixNow);
+	console.log('unixNow', unixNow);
 	let momentNow = moment.tz(unixNow, 'Europe/London');
 	console.log('whatIsTheTimeInTheUK', momentNow);
 	return momentNow;
@@ -77,8 +77,10 @@ const getCarbonForecast = (start, end) => {
 
 const addHumanReadableTime = (array) => {
 	return array.map( (object, key) => {
-		object.fromHumanReadable = moment(object.from).format('ha');
-		object.toHumanReadable = moment(object.to).format('ha');
+		console.log('addHumanReadableTime (before)', object)
+		object.fromHumanReadable = moment.tz(object.from, 'Europe/London').format('ha');
+		object.toHumanReadable = moment.tz(object.to, 'Europe/London').format('ha');
+		console.log('addHumanReadableTime (added)', object)
 		return object;
 	})
 };
