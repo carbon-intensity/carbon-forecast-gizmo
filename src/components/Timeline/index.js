@@ -3,13 +3,11 @@ import Slice from '../Slice/index.js';
 import style from './Timeline.css';
 
 class Timeline extends React.Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
 			carbon : []
 		};
-
 		this.getCarbonForecast(this.props.duration);
 	};
 
