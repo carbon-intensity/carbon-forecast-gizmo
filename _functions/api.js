@@ -32,8 +32,8 @@ const makeTheTimeEven = (date) => {
     }
     else {
         // is odd
-		console.log('makeTheTimeEven (odd)', date.subtract(1, 'hour'));
-        return date.subtract(1, 'hour');
+		console.log('makeTheTimeEven (odd)', moment(date).subtract(1, 'hour'));
+        return moment(date).subtract(1, 'hour');
     }
 };
 
@@ -53,6 +53,9 @@ const getCarbonForecast = (start, end) => {
 	return new Promise( (resolve, reject) => {
 		const startISO = moment(start).format();
 		const endISO = moment(end).format();
+
+		console.log('startISO', startISO)
+		console.log('endISO', endISO)
 
 		const endpoint = `https://api.carbonintensity.org.uk/intensity/stats/${startISO}/${endISO}/2`;
 
@@ -77,10 +80,10 @@ const getCarbonForecast = (start, end) => {
 
 const addHumanReadableTime = (array) => {
 	return array.map( (object, key) => {
-		console.log('addHumanReadableTime (before)', object)
+		// console.log('addHumanReadableTime (before)', object)
 		object.fromHumanReadable = moment.tz(object.from, 'Europe/London').format('ha');
 		object.toHumanReadable = moment.tz(object.to, 'Europe/London').format('ha');
-		console.log('addHumanReadableTime (added)', object)
+		// console.log('addHumanReadableTime (added)', object)
 		return object;
 	})
 };
