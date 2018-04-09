@@ -1,8 +1,5 @@
-import React, {Fragment} from "react";
-import PropTypes from "prop-types";
-
+import React from "react";
 import styles from './Slice.css';
-
 class Slice extends React.Component {
 	constructor(props) {
 		super(props);

@@ -1,10 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-
-import moment from 'moment';
-
 import Slice from '../Slice/index.js';
-
 import style from './Timeline.css';
 
 class Timeline extends React.Component {
@@ -33,13 +28,13 @@ class Timeline extends React.Component {
 
 	render() {
 		let slices = this.state.carbon.map( (x, y) => {
-			return <Slice 
-						key={y} 
-						timeFromHumanReadable={x.fromHumanReadable} 
-						timeToHumanReadable={x.toHumanReadable} 
-						timeFrom={x.from} 
-						timeTo={x.to} 
-						carbon={x.intensity.average} 
+			return <Slice
+						key={y}
+						timeFromHumanReadable={x.fromHumanReadable}
+						timeToHumanReadable={x.toHumanReadable}
+						timeFrom={x.from}
+						timeTo={x.to}
+						carbon={x.intensity.average}
 						percentage={x.intensity.percentage}
 						index={x.intensity.index}
 						indexAbbreviation={x.intensity.indexAbbreviation}
@@ -64,4 +59,4 @@ class Timeline extends React.Component {
 }
 export default Timeline;
 
-//https://api.carbonintensity.org.uk/intensity/2018-04-07T19:38:31.654Z/fw48h 
+//https://api.carbonintensity.org.uk/intensity/2018-04-07T19:38:31.654Z/fw48h
