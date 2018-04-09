@@ -2,6 +2,10 @@ import React from "react";
 import Slice from '../Slice/index.js';
 import style from './Timeline.css';
 
+import wwf from 'svg-url-loader?iesafe&noquotes!./wwf.svg';
+import edf from 'svg-url-loader?iesafe&noquotes!./edf.svg';
+import nationalgrid from 'svg-url-loader?iesafe&noquotes!./national-grid.svg';
+
 class Timeline extends React.Component {
 	constructor(props) {
 		super(props);
@@ -43,15 +47,36 @@ class Timeline extends React.Component {
 					/>
 		});
 
-		let inlineStyle = {
-			width: (this.state.carbon.length * 150) + "px"
-		}
+		let calculatedWidth = (this.state.carbon.length * 7) + "em";
+
+		let styleInner = {
+			width: calculatedWidth
+		};
+
+		let styleFooter = {
+			maxWidth: calculatedWidth
+		};
 
 		return (
-			<div className={style.timeline} style={inlineStyle}>
-				{console.log(this.state.carbon)}
-				{slices}
-			</div>
+			<React.Fragment>
+				<div className={style.timeline}>
+					<div className={style.timeline__inner} style={styleInner}>
+						{slices}
+					</div>
+				</div>
+				<p className={style.key}>(<b>VH</b> = Very high carbon, <b>H</b> = High carbon, <b>M</b> = Moderate, <b>L</b> = Low carbon, <b>VL</b> = Very low carbon)</p>
+				<footer className={style.ftr} style={styleFooter}>
+					<a className={style['logo-link--edf']} href="https://www.edf.org" target="_blank">
+						<img src={edf} alt="" />
+					</a>
+					<a className={style['logo-link--ng']} href="http://www.nationalgrid.com/uk/" target="_blank">
+						<img src={nationalgrid} alt="" />
+					</a>
+					<a className={style['logo-link--wwf']} href="https://www.wwf.org.uk/" target="_blank">
+						<img src={wwf} alt="" />
+					</a>
+				</footer>
+			</React.Fragment>
 		);
 	}
 }

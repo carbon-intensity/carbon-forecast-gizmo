@@ -15,12 +15,12 @@ class Slice extends React.Component {
 		}
 
 		if(props.lowest === true) {
-			this.state.lowest = <p className={styles['plug-in']}><img src="https://icongr.am/material/power-socket-uk.svg?color=008000" alt="" width="24" height="24" />Plug in</p>;
+			this.state.lowest = <p className={styles['plug-in']}><img src="https://icongr.am/material/power-plug.svg?color=008000" alt="" width="24" height="24" />Plug in</p>;
 			this.state.sliceStyle += ` ${styles['slice--lowest']}`
 		}
 
 		if(props.highest === true) {
-			this.state.highest = <p className={styles.unplug}><img src="https://icongr.am/material/power-socket-uk.svg?color=ff0000" alt="" width="24" height="24" />Unplug</p>;
+			this.state.highest = <p className={styles.unplug}><img src="https://icongr.am/material/power-plug-off.svg?color=ff0000" alt="" width="24" height="24" />Unplug</p>;
 			this.state.sliceStyle += ` ${styles['slice--highest']}`
 		}
 	}

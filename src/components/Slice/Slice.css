@@ -1,12 +1,12 @@
 .slice {
-	display        : inline-block;
 	box-sizing     : border-box;
-	width          : 150px;
-	margin         : 0;
-	padding        : 0.5em 0.25em 0.25em 0.25em;
-	vertical-align : top;
-	font           : normal 1em/1 sans-serif;
+	display        : inline-block;
+	font           : normal 16px/1 sans-serif;
 	font-family    : -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", "Helvetica", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	margin         : 0;
+	padding        : 1em 0.5em 0.5em 0.5em;
+	vertical-align : top;
+	width          : 7em;
 }
 
 	.slice:first-child {
@@ -14,7 +14,7 @@
 	}
 
 	.slice--new-day {
-		border-left: 0.2em dotted #888888;
+		border-left: 2px dotted #888888;
 	}
 
 	.slice--highest {
@@ -30,21 +30,26 @@
 }
 
 .time {
+	color: #222222;
+	font-size: 0.8em;
 	margin: 0;
-	padding: 0 0.5em 0.5em 0.5em;
+	padding: 0 0.5em 0.75em 0.5em;
 	text-align: center;
 }
 
 .day {
-	margin: 0;
+	color: #222222;
+	font-size: 0.8em;
+	margin: 0 0 0.75em 0;
 	padding: 0;
 	text-align: center;
 }
 
 .plug-in {
-	color: green;
+	color: #222222;
+	font-size: 0.8em;
 	margin: 0;
-	padding: 0 2em 0.25em 1em;
+	padding: 0;
 	text-align: center;
 }
 
@@ -57,9 +62,10 @@
 	}
 
 .unplug {
-	color: red;
+	color: #222222;
+	font-size: 0.8em;
 	margin: 0;
-	padding: 0 2em 0.25em 1em;
+	padding: 0;
 	text-align: center;
 }
 
@@ -72,16 +78,16 @@
 	}
 
 .indicator {
-	height:  300px;
+	height: 211px;
 	display: block;
 	position: relative;
 }
 
 .indicator__text {
-	font-size: 1.25em;
+	font-size: 1em;
 	text-align: center;
 	margin: 0;
-	padding-top: 1.25em;
+	padding-top: 1.7em;
 }
 
 .indicator__house,
@@ -90,18 +96,18 @@
 	box-sizing: border-box;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%) ;
-	width:  64px;
-	height: 64px;
+	width:  60%;
+	height: 4em;
 }
 
 .indicator--very-high .indicator__house,
 .indicator--very-high .indicator__text {
-	top: 32px;
+	top: 2em;
 }
 
 .indicator--high .indicator__house,
 .indicator--high .indicator__text {
-	top: calc(25% + 32px);
+	top: calc(25% + 2em);
 }
 
 .indicator--moderate .indicator__house,
@@ -111,12 +117,12 @@
 
 .indicator--low .indicator__house,
 .indicator--low .indicator__text {
-	bottom: calc(25% - 32px);
+	bottom: calc(25% - 2em);
 }
 
 .indicator--very-low .indicator__house,
 .indicator--very-low .indicator__text {
-	bottom: 32px;
+	bottom: 2em;
 }
 
 .indicator--very-high .indicator__house {
