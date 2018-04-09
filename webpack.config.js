@@ -5,7 +5,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: ['./src/carbon-gizmo-app.js'],
     output: {
         path: path.resolve(__dirname, 'public'),
