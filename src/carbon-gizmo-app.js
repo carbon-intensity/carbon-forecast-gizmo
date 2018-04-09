@@ -5,4 +5,4 @@ import Timeline from './components/Timeline';
 
 const app = document.getElementById("root");
 
-app ? ReactDOM.render(<Timeline duration="48" />, app) : false;
+app ? ReactDOM.render(<Timeline />, app) : false;

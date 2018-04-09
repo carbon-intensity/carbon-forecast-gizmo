@@ -8,11 +8,11 @@ class Timeline extends React.Component {
 		this.state = {
 			carbon : []
 		};
-		this.getCarbonForecast(this.props.duration);
+		this.getCarbonForecast();
 	};
 
 	getCarbonForecast = (duration) => {
-		fetch(`/.netlify/functions/api/${duration}`)
+		fetch(`/.netlify/functions/api/`)
 			.then( (response) => {
 				return response.json()
 			})

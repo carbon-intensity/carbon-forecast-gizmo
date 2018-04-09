@@ -175,15 +175,15 @@ const addWhichDayItIs = (array) => {
 };
 
 const isADurationAskedFor = (path) => {
-	let lookInTheURL = path.match(/(?:\/api\/)([0-9][0-9])$/);
+// 	let lookInTheURL = path.match(/(?:\/api\/)([0-9][0-9])$/);
 
 
-	if (lookInTheURL === null) {
-		return 24;
-	}
-	else if ( lookInTheURL[1] === '24' || lookInTheURL[1] === '36' || lookInTheURL[1] === '48') {
-			return Number.parseInt(lookInTheURL[1]);
-	}
+// 	if (lookInTheURL === null) {
+// 		return 24;
+// 	}
+// 	else if ( lookInTheURL[1] === '24' || lookInTheURL[1] === '36' || lookInTheURL[1] === '48') {
+// 			return Number.parseInt(lookInTheURL[1]);
+// 	}
 
 	return 24
 }
@@ -192,7 +192,8 @@ const isADurationAskedFor = (path) => {
 exports.handler = (event, context, callback) => {
 
 	// only accept 12, 24, 36, and 48 hour durations. Defaults to 24 hours.
-
+	// TODO: not currently working on Netlify functions; quickfix is to default
+	// to 24 hours.
 	let duration = isADurationAskedFor(event.path);
 
     // Get time in UK timezone
