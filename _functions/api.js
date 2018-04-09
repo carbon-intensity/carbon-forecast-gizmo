@@ -1,5 +1,5 @@
-import moment from 'moment-timezone';
-import https from 'https';
+const moment = require('moment-timezone');
+const https = require('https');
 
 const leadingZero = function (n) {
     return (n < 10) ? ("0" + n) : n;
@@ -176,11 +176,11 @@ const isADurationAskedFor = (path) => {
 
 	if (lookInTheURL === null) {
 		return 24;
-	} 
+	}
 	else if ( lookInTheURL[1] === '24' || lookInTheURL[1] === '36' || lookInTheURL[1] === '48') {
 			return Number.parseInt(lookInTheURL[1]);
 	}
-	
+
 	return 24
 }
 
@@ -193,11 +193,11 @@ exports.handler = (event, context, callback) => {
 
     // Get time in UK timezone
     let timeInUK = whatIsTheTimeInTheUK();
-	
+
 	// Get the last even hour (eg if it's 9:15am, then this will return 8:00am)
 	let evenTime = makeTheTimeEven(timeInUK);
 
-	// Convert to UTC for requesting from the API, 
+	// Convert to UTC for requesting from the API,
 	// get the start and end time in UTC
 	// Returns a object with 'startUTC' and 'endUTC', 'startUK' and 'endUK'
 	let timeBounds = getTimeBounds(evenTime, duration);
@@ -214,10 +214,10 @@ exports.handler = (event, context, callback) => {
 
 			// Add in day flag on each object
     		addWhichDayItIs(response.data);
-    		
+
     		// Add 'true' to the highest and lowest
     		let responseWithHighestAndLowest = findTheHighestAndLowestForecast(response);
-			
+
 
 		    callback(null, {
 		    	statusCode: 200,
