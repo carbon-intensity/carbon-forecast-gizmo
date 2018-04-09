@@ -14,7 +14,7 @@ class Timeline extends React.Component {
 	};
 
 	getCarbonForecast = (duration) => {
-		fetch(`http://localhost:9000/api/${duration}`)
+		fetch(`/api/${duration}`)
 			.then( (response) => {
 				return response.json()
 			})
