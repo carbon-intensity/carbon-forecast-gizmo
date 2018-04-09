@@ -12,8 +12,9 @@ const leadingZero = function (n) {
 
 const whatIsTheTimeInTheUK = () => {
 	let unixNow = Date.now(); // To ensure that the time in Unix time, which is based on UTC.
+	console.log(unixNow);
 	let momentNow = moment.tz(unixNow, 'Europe/London');
-
+	console.log('whatIsTheTimeInTheUK', momentNow);
 	return momentNow;
 };
 
@@ -26,21 +27,25 @@ const makeTheTimeEven = (date) => {
 
     if (parseInt(hour) % 2 === 0) {
         // is even
+		console.log('makeTheTimeEven (even)', date);
         return date;
     }
     else {
         // is odd
+		console.log('makeTheTimeEven (odd)', date.subtract(1, 'hour'));
         return date.subtract(1, 'hour');
     }
 };
 
 
 const getTimeBounds = (time, duration) => {
-	return {
+	let rtrn = {
 		start: moment(time).utc(),
 		end: moment(time).utc().add(duration, 'hours'),
 		daylightSavings: moment(time).isDST()
-	}
+	};
+	console.log('getTimeBounds', rtrn);
+	return rtrn;
 }
 
 
