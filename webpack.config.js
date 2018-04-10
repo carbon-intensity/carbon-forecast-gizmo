@@ -42,7 +42,8 @@ module.exports = {
                                 googleAnalytics : [
                                     process.env.GOOGLE_ANALYTICS_ID,
                                     process.env.GOOGLE_ANALYTICS_ID_2
-                                ]
+                                ],
+                                environmentName : process.env.ENVIRONMENT_NAME
                             }
                         }
                     }
