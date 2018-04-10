@@ -2,9 +2,6 @@ const moment = require('moment-timezone');
 const https = require('https');
 
 
-//! version : 2.0.1
-//! Copyright (c) Ian James
-//! inj.ms/github
 const leadingZero = function (n) {
     return (n < 10) ? ("0" + n) : n;
 };
@@ -61,7 +58,7 @@ const getCarbonForecast = (start, end) => {
 
 		https
 			.get(endpoint, (response) => {
-				if ( response.statusCode >= 200 && response.statusCode < 300) {
+				if ( response.statusCode >= 200 && response.statusCode < 400) {
 					response.on('data', (data) => {
 						resolve( JSON.parse(data) );
 					});
