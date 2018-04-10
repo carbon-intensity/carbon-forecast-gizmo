@@ -16,16 +16,33 @@ class Timeline extends React.Component {
 	};
 
 	getCarbonForecast = (duration) => {
-		fetch(`/api/`)
-			.then( (response) => {
-				return response.json()
-			})
-			.then( (response) => {
-				this.setState({carbon : response.data})
-			})
-			.catch( err => {
-				console.warn(err)
-			})
+		let endpoint = `https://reactify-rebuild--carbon-gizmo.netlify.com/api/`;
+
+		// fetch(endpoint)
+		// 	.then( (response) => {
+		// 		return response.json()
+		// 	})
+		// 	.then( (response) => {
+		// 		this.setState({carbon : response.data})
+		// 	})
+		// 	.catch( err => {
+		// 		console.warn(err)
+		// 	})
+
+		let request = new XMLHttpRequest();
+            request.open('GET', endpoint, true);
+            request.onreadystatechange = (ev) => {
+            	console.log(request, this)
+                if (request.readyState === 4) {
+                    if (request.status >= 200 && request.status < 400) {
+                        let response = JSON.parse(request.responseText);
+                        this.setState({carbon : response.data})
+                    } else {
+                        // Error :(
+                    }
+                }
+            };
+			request.send();
 	};
 
 	render() {
@@ -47,19 +64,19 @@ class Timeline extends React.Component {
 					/>
 		});
 
-		let calculatedWidth = (this.state.carbon.length * 7) + "em";
+		let calculatedWidth = (this.state.carbon.length * 7);
 
-		let styleInner = {
-			width: calculatedWidth
-		};
+		let styleInner = {};
+		let styleFooter = {};
 
-		let styleFooter = {
-			maxWidth: calculatedWidth
-		};
+		if (calculatedWidth > 0) {
+			styleInner.width = calculatedWidth + "em"
+			styleFooter.maxWidth = calculatedWidth + "rem"
+		}
 
 		return (
 			<React.Fragment>
-				<div className={style.timeline}>
+				<div className={style.timeline} style={styleFooter}>
 					<div className={style.timeline__inner} style={styleInner}>
 						{slices}
 					</div>
@@ -67,13 +84,16 @@ class Timeline extends React.Component {
 				<p className={style.key}>(<b>VH</b> = Very high carbon, <b>H</b> = High carbon, <b>M</b> = Moderate, <b>L</b> = Low carbon, <b>VL</b> = Very low carbon)</p>
 				<footer className={style.ftr} style={styleFooter}>
 					<a className={style['logo-link--edf']} href="https://www.edf.org" target="_blank">
-						<img src={edf} alt="" />
+						<img src={edf} alt="Environment Defense Fund logo" role="presentation" />
+						<span className={style.vh}>Environment Defense Fund</span>
 					</a>
 					<a className={style['logo-link--ng']} href="http://www.nationalgrid.com/uk/" target="_blank">
-						<img src={nationalgrid} alt="" />
+						<img src={nationalgrid} alt="National Grid logo" role="presentation" />
+						<span className={style.vh}>National Grid</span>
 					</a>
 					<a className={style['logo-link--wwf']} href="https://www.wwf.org.uk/" target="_blank">
-						<img src={wwf} alt="" />
+						<img src={wwf} alt="WWF logo" role="presentation" />
+						<span className={style.vh}>WWF</span>
 					</a>
 				</footer>
 			</React.Fragment>

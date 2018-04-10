@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        title Carbon Gizmo
+        style.
+            html,
+            body,
+            #app {
+                margin: 0;
+                padding: 0;
+                min-width: 100%;
+            }
+    body
+        div#app
+
+        - var setup = `window.ga = window.ga || function (){(ga.q=ga.q||[]).push(arguments)};`
+        - var tokens = [];
+
+        each val, index in googleAnalytics
+            - var token = val.split(';');
+            - var create = `ga('create', '${token[0]}', 'auto', '${token[1]}');`
+            - var send = `ga('${token[1]}.send', 'pageview');`
+            - tokens.push({create: create, send: send});
+
+        script
+            != setup
+            each v in tokens
+                != v.create
+                != v.send
+
+        script(async src="https://www.google-analytics.com/analytics.js")

@@ -4,6 +4,8 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
+require('dotenv').config()
+
 module.exports = {
     mode: 'production',
     entry: ['./src/carbon-gizmo-app.js'],
@@ -24,6 +26,29 @@ module.exports = {
                 }
             },
             {
+                include: /\.pug$/,
+                use: [
+                    {
+                        loader: 'raw-loader'
+                    },
+                    {
+                        loader: 'pug-html-loader',
+                        options: {
+                            // options to pass to the compiler same as: https://pugjs.org/api/reference.html
+                            debug: false,
+                            data: {
+                                // set of data to pass to the pug render.
+                                rollbar : process.env.ROLLBAR_ACCESS_TOKEN,
+                                googleAnalytics : [
+                                    process.env.GOOGLE_ANALYTICS_ID,
+                                    process.env.GOOGLE_ANALYTICS_ID_2
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            {
                 test: /\.html$/,
                 use: [
                     {
@@ -34,26 +59,31 @@ module.exports = {
             {
                 test: /\.css$/,
                 loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:8]'
-            },
-            {
-                test: /\.svg$/,
-                use: {
-                    loader: 'svg-url-loader',
-                    options: {}
-                }
+            // },
+            // {
+            //     test: /\.svg$/,
+            //     use: {
+            //         loader: 'svg-url-loader',
+            //         options: {
+            //             noquotes: true,
+            //             limit: 1024,
+            //             stripdeclarations: true,
+
+            //         }
+            //     }
             }
         ]
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
         new UglifyJSPlugin({
-            sourceMap: true
+            sourceMap: false
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
         new HtmlWebPackPlugin({
-            template: './src/index.html',
+            template: './src/index.pug',
             filename: './index.html'
         // }),
         // new CompressionPlugin({
