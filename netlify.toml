@@ -2,8 +2,33 @@
     functions = "functions"
     publish = "public"
 
+[[headers]]
+    for = "/*"
+    [headers.values]
+        Content-Security-Policy = "default-src 'self' ; script-src 'self' 'unsafe-inline' ; style-src 'self' 'unsafe-inline' ; img-src 'self' data: ; upgrade-insecure-requests; block-all-mixed-content; report-uri https://panda.report-uri.com/r/d/csp/enforce"
+        Expect-CT = "max-age=0, report-uri='https://panda.report-uri.com/r/d/ct/reportOnly'"
+        Referrer-Policy = "strict-origin-when-cross-origin"
+        X-Content-Type-Options = "nosniff"
+        X-XSS-Protection = "1; mode=block"
+
+# ------------------------------------------------------------------------------
+# Redirects
+# ------------------------------------------------------------------------------
+
 [[redirects]]
     from = "/api/*"
     to = "/.netlify/functions/api"
     status = 200
+    force = false
+
+[[redirects]]
+    from = "/1.0.13--beta/*"
+    to = "/"
+    status = 301
+    force = false
+
+[[redirects]]
+    from = "/1.0.14--beta/*"
+    to = "/"
+    status = 301
     force = false
