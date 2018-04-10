@@ -16,7 +16,7 @@ class Timeline extends React.Component {
 	};
 
 	getCarbonForecast = (duration) => {
-		let endpoint = `https://reactify-rebuild--carbon-gizmo.netlify.com/api/`;
+		let endpoint = `/api/`;
 
 		// fetch(endpoint)
 		// 	.then( (response) => {
