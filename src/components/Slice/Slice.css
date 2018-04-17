@@ -1,0 +1,154 @@
+.slice {
+	box-sizing     : border-box;
+	display        : inline-block;
+	font           : normal 16px/1 sans-serif;
+	font-family    : -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", "Helvetica", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	margin         : 0;
+	padding        : 1em 0.5em 0.5em 0.5em;
+	vertical-align : top;
+	width          : 7em;
+}
+
+	.slice:first-child {
+		border: 0;
+	}
+
+	.slice--new-day {
+		border-left: 2px dotted #888888;
+	}
+
+	.slice--highest {
+		background: #ffd3da;
+	}
+
+	.slice--lowest {
+		background: #d6e8ce;
+	}
+
+.hdr {
+	min-height: 4.5em;
+}
+
+.time {
+	color: #222222;
+	font-size: 0.8em;
+	margin: 0;
+	padding: 0 0.5em 0.75em 0.5em;
+	text-align: center;
+}
+
+.day {
+	color: #222222;
+	font-size: 0.8em;
+	margin: 0 0 0.75em 0;
+	padding: 0;
+	text-align: center;
+}
+
+.plug-in {
+	color: #222222;
+	font-size: 0.8em;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+	.plug-in img {
+		display: inline-block;
+		vertical-align: middle;
+		width: 22px;
+		height: 22px;
+		margin: -0.2em 0.25em 0 0;
+	}
+
+.unplug {
+	color: #222222;
+	font-size: 0.8em;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+	.unplug img {
+		display: inline-block;
+		vertical-align: middle;
+		width: 22px;
+		height: 22px;
+		margin: -0.2em 0.25em 0 0;
+	}
+
+.indicator {
+	height: 211px;
+	display: block;
+	position: relative;
+}
+
+.indicator__text {
+	font-size: 1em;
+	text-align: center;
+	margin: 0;
+	padding-top: 1.7em;
+}
+
+.indicator__house,
+.indicator__text {
+	position: absolute;
+	box-sizing: border-box;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%) ;
+	width:  60%;
+	height: 4em;
+}
+
+.indicator--very-high .indicator__house,
+.indicator--very-high .indicator__text {
+	top: 2em;
+}
+
+.indicator--high .indicator__house,
+.indicator--high .indicator__text {
+	top: calc(25% + 2em);
+}
+
+.indicator--moderate .indicator__house,
+.indicator--moderate .indicator__text {
+	top: 50%;
+}
+
+.indicator--low .indicator__house,
+.indicator--low .indicator__text {
+	bottom: calc(25% - 2em);
+}
+
+.indicator--very-low .indicator__house,
+.indicator--very-low .indicator__text {
+	bottom: 2em;
+}
+
+.indicator--very-high .indicator__house {
+	stroke: #EE3350;
+}
+
+.indicator--high .indicator__house {
+	stroke: #F89834;
+}
+
+.indicator--moderate .indicator__house {
+	stroke: #FFE600;
+}
+
+.indicator--low .indicator__house {
+	stroke: #74C050;
+}
+
+.indicator--very-low .indicator__house {
+	stroke: #74C050;
+}
+
+.vh {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+}

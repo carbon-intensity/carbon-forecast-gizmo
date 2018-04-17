@@ -1,0 +1,72 @@
+.timeline {
+	background: #fff;
+    font-size: 16px;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	overflow: hidden;
+    overflow-x: scroll;
+    width: 100%;
+}
+
+.timeline__inner {
+    background: linear-gradient(to right, #eeeeee 0%, #eeeeee 50%, #ffffff 50%, #ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background-size: 14em auto;
+    height: 307px;
+    width: 100%;
+}
+
+.key {
+    background: #ffffff;
+    text-align: left;
+    margin: 0;
+    padding: 0 1em;
+    font: normal 14px/1 sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", "Helvetica", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    width: 100%;
+}
+
+.ftr {
+    background: #ffffff;
+    text-align: right;
+    font-size: 16px;
+    width: 100%;
+}
+
+.logo-link--edf,
+.logo-link--wwf,
+.logo-link--ng {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.5em;
+}
+.logo-link--edf img,
+.logo-link--wwf img,
+.logo-link--ng img {
+    width: 100%;
+    height: auto;
+}
+
+.logo-link--edf {
+    width: 86px;
+    height: 30px;
+}
+
+.logo-link--wwf {
+    height: 50px;
+    width: 41px;
+}
+
+.logo-link--ng {
+    width: 121px;
+    height: 25px;
+}
+.vh {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+}
