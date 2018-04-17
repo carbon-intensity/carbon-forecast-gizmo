@@ -39,3 +39,9 @@
     to = "https://v1-0-14--carbon-gizmo.netlify.com/:splat"
     status = 200
     force = false
+
+[[redirects]]
+    from = "/2.0.0/*"
+    to = "/:splat"
+    status = 200
+    force = false

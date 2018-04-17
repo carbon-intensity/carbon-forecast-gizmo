@@ -111,8 +111,9 @@ Temporary Items
 .env
 .aws-publish-cache
 rev-manifest.json
-functions/
 
+functions/
 public/
+build/
 
 *.TMP
