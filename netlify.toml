@@ -1,6 +1,7 @@
 [build]
     functions = "functions"
     publish = "public"
+    command = "npm run build"
 
 [[headers]]
     for = "/*"
@@ -22,13 +23,19 @@
     force = false
 
 [[redirects]]
+    from = "/postcode/*"
+    to = "https://api.postcodes.io/postcodes/:splat"
+    status = 200
+    force = false
+
+[[redirects]]
     from = "/1.0.13--beta/*"
-    to = "/"
-    status = 301
+    to = "https://v1-0-14--carbon-gizmo.netlify.com/"
+    status = 200
     force = false
 
 [[redirects]]
     from = "/1.0.14--beta/*"
-    to = "/"
-    status = 301
+    to = "https://v1-0-14--carbon-gizmo.netlify.com/"
+    status = 200
     force = false
