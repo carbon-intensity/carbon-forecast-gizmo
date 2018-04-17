@@ -1,6 +1,6 @@
 # Carbon Intensity Forecase gizmo
 
-![](screenshot.png)
+![Screenshot of the carbon gizmo](screenshot.png)
 
 [![Powered by electricity](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
 
