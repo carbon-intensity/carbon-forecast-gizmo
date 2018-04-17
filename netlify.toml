@@ -30,12 +30,12 @@
 
 [[redirects]]
     from = "/1.0.13--beta/*"
-    to = "https://v1-0-14--carbon-gizmo.netlify.com/"
+    to = "https://v1-0-14--carbon-gizmo.netlify.com/:splat"
     status = 200
     force = false
 
 [[redirects]]
     from = "/1.0.14--beta/*"
-    to = "https://v1-0-14--carbon-gizmo.netlify.com/"
+    to = "https://v1-0-14--carbon-gizmo.netlify.com/:splat"
     status = 200
     force = false
