@@ -17,15 +17,21 @@ To run locally, you'll need Node v9.6.1 - it'll probably run on earlier versions
 Do the usual install - `npm install`.
 
 To run as a dev server you need to run both the Webpack development server and Netlify Lambda:
-    * `npm run dev`
+
+* `npm run dev`
+    
 and separately
-    * `npm run dev:functions`
+
+* `npm run dev:functions`
 
 TODO: separate `.env.local` for API endpoints, not using Rollbar, and not putting pageviews into Google Analytics.
 
 To build for deployment:
-    * `npm run build`
+
+* `npm run build`
+    
 and then:
-    * `npm run functions`
+
+* `npm run functions`
 
 But in all honesty it's probably easier to fork this repo, then run the site on Netlify.
