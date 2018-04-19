@@ -25,7 +25,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "moment": "^2.22.1",
-    "moment-timezone": "^0.5.15",
+    "moment-timezone": "^0.5.16",
     "netlify-lambda": "^0.4.0",
     "prop-types": "^15.6.1",
     "pug-html-loader": "^1.1.5",
