@@ -4,7 +4,9 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-require('dotenv').config()
+const dotenv = require('dotenv');
+    dotenv.config({path: path.resolve(__dirname) + '/.environmentName'});
+    // dotenv.config({path: path.resolve(__dirname) + '/.env'});
 
 module.exports = {
     mode: 'production',
