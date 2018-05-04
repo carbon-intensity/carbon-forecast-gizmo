@@ -1,0 +1,47 @@
+
+
+.ftr {
+    background: #ffffff;
+    text-align: right;
+    font-size: 16px;
+    width: 100%;
+}
+
+.logo-link--edf,
+.logo-link--wwf,
+.logo-link--ng {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.5em;
+}
+.logo-link--edf img,
+.logo-link--wwf img,
+.logo-link--ng img {
+    width: 100%;
+    height: auto;
+}
+
+.logo-link--edf {
+    width: 86px;
+    height: 30px;
+}
+
+.logo-link--wwf {
+    height: 50px;
+    width: 41px;
+}
+
+.logo-link--ng {
+    width: 121px;
+    height: 25px;
+}
+
+.vh {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+}

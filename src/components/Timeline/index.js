@@ -1,10 +1,7 @@
 import React from "react";
-import Slice from '../Slice/index.js';
+import Slice from '../Slice/';
+import Footer from '../Footer/';
 import style from './Timeline.css';
-
-import wwf from 'svg-url-loader?iesafe&noquotes!./wwf.svg';
-import edf from 'svg-url-loader?iesafe&noquotes!./edf.svg';
-import nationalgrid from 'svg-url-loader?iesafe&noquotes!./national-grid.svg';
 
 class Timeline extends React.Component {
 	constructor(props) {
@@ -82,24 +79,9 @@ class Timeline extends React.Component {
 					</div>
 				</div>
 				<p className={style.key}>(<b>VH</b> = Very high carbon, <b>H</b> = High carbon, <b>M</b> = Moderate, <b>L</b> = Low carbon, <b>VL</b> = Very low carbon)</p>
-				<footer className={style.ftr} style={styleFooter}>
-					<a className={style['logo-link--edf']} href="https://www.edf.org" target="_blank">
-						<img src={edf} alt="Environment Defense Fund logo" role="presentation" />
-						<span className={style.vh}>Environment Defense Fund</span>
-					</a>
-					<a className={style['logo-link--ng']} href="http://www.nationalgrid.com/uk/" target="_blank">
-						<img src={nationalgrid} alt="National Grid logo" role="presentation" />
-						<span className={style.vh}>National Grid</span>
-					</a>
-					<a className={style['logo-link--wwf']} href="https://www.wwf.org.uk/" target="_blank">
-						<img src={wwf} alt="WWF logo" role="presentation" />
-						<span className={style.vh}>WWF</span>
-					</a>
-				</footer>
+				<Footer style={styleFooter} />
 			</React.Fragment>
 		);
 	}
 }
 export default Timeline;
-
-//https://api.carbonintensity.org.uk/intensity/2018-04-07T19:38:31.654Z/fw48h
