@@ -9,9 +9,9 @@ const leadingZero = function (n) {
 
 const whatIsTheTimeInTheUK = () => {
 	let unixNow = Date.now(); // To ensure that the time in Unix time, which is based on UTC.
-	console.log('unixNow', unixNow);
+	// console.log('unixNow', unixNow);
 	let momentNow = moment.tz(unixNow, 'Europe/London');
-	console.log('whatIsTheTimeInTheUK', momentNow);
+	// console.log('whatIsTheTimeInTheUK', momentNow);
 	return momentNow;
 };
 
@@ -24,12 +24,12 @@ const makeTheTimeEven = (date) => {
 
     if (parseInt(hour) % 2 === 0) {
         // is even
-		console.log('makeTheTimeEven (even)', date);
+		// console.log('makeTheTimeEven (even)', date);
         return date;
     }
     else {
         // is odd
-		console.log('makeTheTimeEven (odd)', moment(date).subtract(1, 'hour'));
+		// console.log('makeTheTimeEven (odd)', moment(date).subtract(1, 'hour'));
         return moment(date).subtract(1, 'hour');
     }
 };
@@ -41,18 +41,15 @@ const getTimeBounds = (time, duration) => {
 		end: moment(time).utc().add(duration, 'hours'),
 		daylightSavings: moment(time).isDST()
 	};
-	console.log('getTimeBounds', rtrn);
+	// console.log('getTimeBounds', rtrn);
 	return rtrn;
 }
 
 
-const getCarbonForecast = (start, end) => {
+const getCountryForecast = (start, end) => {
 	return new Promise( (resolve, reject) => {
 		const startISO = moment(start).format();
 		const endISO = moment(end).format();
-
-		console.log('startISO', startISO)
-		console.log('endISO', endISO)
 
 		const endpoint = `https://api.carbonintensity.org.uk/intensity/stats/${startISO}/${endISO}/2`;
 
@@ -73,6 +70,49 @@ const getCarbonForecast = (start, end) => {
 			.end();
 	})
 };
+
+const getAreaForecast = (start, postcode) => {
+
+	return new Promise( (resolve, reject) => {
+		const startISO = moment(start).format();
+
+		console.log('startISO', startISO)
+		console.log('postcode', postcode)
+
+		// const endpoint = `https://api.carbonintensity.org.uk/intensity/stats/${startISO}/${endISO}/2`;
+		const endpoint = {
+			host: `api.carbonintensity.org.uk`,
+			path: `/regional/intensity/${startISO}/fw24h/postcode/${postcode}`,
+			headers : {
+				'x-api-key' : '5a7be25b-582c-4503-9743-4feec9812424'
+			}
+		}
+		https
+			.get(endpoint, (response) => {
+				if ( response.statusCode >= 200 && response.statusCode < 400) {
+					let rawData = '';
+  					response.on('data', (chunk) => { rawData += chunk; });
+  					response.on('end', () => {
+						try {
+							const parsedData = JSON.parse(rawData);
+							resolve( parsedData );
+						} catch (e) {
+							console.error(e.message);
+						}
+  					});
+				}
+				else {
+					reject({
+						result: false,
+					});
+				}
+			})
+			.on('error', (error) => {
+				reject(error);
+			})
+			.end();
+	})
+}
 
 
 const addHumanReadableTime = (array) => {
@@ -193,6 +233,43 @@ const isADurationAskedFor = (path) => {
 // 	}
 
 	return 24
+};
+
+const checkPostcode = (postcode) => {
+	return new Promise( (resolve, reject) => {
+
+		const endpoint = `https://api.postcodes.io/postcodes/${postcode}/`;
+
+		https
+			.get(endpoint, (response) => {
+				if ( response.statusCode >= 200 && response.statusCode < 400) {
+					let rawData = '';
+  					response.on('data', (chunk) => { rawData += chunk; });
+  					response.on('end', () => {
+						try {
+							const parsedData = JSON.parse(rawData);
+							resolve( {
+								result: true,
+								outcode: parsedData.result.outcode
+							} );
+						} catch (e) {
+							console.error(e.message);
+						}
+  					});
+				}
+				else {
+					reject({
+						result: false,
+						message: response.error
+					});
+				}
+			})
+			.on('error', (error) => {
+				reject(error);
+			})
+			.end();
+	})
+
 }
 
 
@@ -214,42 +291,73 @@ exports.handler = (event, context, callback) => {
 	// Returns a object with 'startUTC' and 'endUTC', 'startUK' and 'endUK'
 	let timeBounds = getTimeBounds(evenTime, duration);
 
-	// Request the data from the API
-    getCarbonForecast(timeBounds.start, timeBounds.end)
-    	.then( (response) => {
+	if ( event.httpMethod === 'POST' ) {
 
-			// Add in the human readable dates
-    		addHumanReadableTime(response.data);
+		checkPostcode(event.body)
+			.then( (response) => {
+						console.log('response', response)
+				getAreaForecast(timeBounds.start, response.outcode.toLowerCase())
+					.then( (response) => {
+						console.log(response.json())
+						return response.json();
+					})
+					.then( (response) => {
+					    callback(null, {
+					    	statusCode: 200,
+					    	headers : {
+					    		"Content-Type" : 'application/json; charset=utf-8',
+					    		"X-Powered-By" : 'Electricity',
+					    		"Access-Control-Allow-Methods": 'GET',
+					    		"Access-Control-Allow-Origin" : '*'
 
-    		// For example, 'very high' has 'VH', 'low' has 'L'.
-    		addCarbonIndexAbbreviations(response.data);
+					    	},
+					    	body: JSON.stringify( response )
+					    });
+					})
+					.catch( (error) => {
+						console.error('error1');
+					})
+			})
+			.catch( error => {
+				console.error('error2');
+			})
+	}
+	else {
 
-			// Add in day flag on each object
-    		addWhichDayItIs(response.data);
+		// Request the data from the API
+	    getCountryForecast(timeBounds.start, timeBounds.end)
+	    	.then( (response) => {
 
-    		// Add 'true' to the highest and lowest
-    		let responseWithHighestAndLowest = findTheHighestAndLowestForecast(response);
+				// Add in the human readable dates
+	    		addHumanReadableTime(response.data);
 
+	    		// For example, 'very high' has 'VH', 'low' has 'L'.
+	    		addCarbonIndexAbbreviations(response.data);
 
-		    callback(null, {
-		    	statusCode: 200,
-		    	headers : {
-		    		"Content-Type" : 'application/json; charset=utf-8',
-		    		"X-Powered-By" : 'Electricity',
-		    		"Access-Control-Allow-Methods": 'GET',
-		    		"Access-Control-Allow-Origin" : '*'
+				// Add in day flag on each object
+	    		addWhichDayItIs(response.data);
 
-		    	},
-		    	body: JSON.stringify( responseWithHighestAndLowest )
-		    });
-    	})
-    	.catch( error => {
-		    callback(null, {
-		    	statusCode: 500,
-		    	body: JSON.stringify(error)
-		    });
-
-    	})
+	    		// Add 'true' to the highest and lowest
+	    		let responseWithHighestAndLowest = findTheHighestAndLowestForecast(response);
 
 
+			    callback(null, {
+			    	statusCode: 200,
+			    	headers : {
+			    		"Content-Type" : 'application/json; charset=utf-8',
+			    		"X-Powered-By" : 'Electricity',
+			    		"Access-Control-Allow-Methods": 'GET',
+			    		"Access-Control-Allow-Origin" : '*'
+
+			    	},
+			    	body: JSON.stringify( responseWithHighestAndLowest )
+			    });
+	    	})
+	    	.catch( error => {
+			    callback(null, {
+			    	statusCode: 500,
+			    	body: JSON.stringify(error)
+			    });
+	    	})
+	}
 }
