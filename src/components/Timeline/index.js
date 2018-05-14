@@ -21,9 +21,6 @@ class Timeline extends React.Component {
 			postcode: postcode
 		};
 
-		console.log('postcodeUnsanitised', postcodeUnsanitised)
-		console.log('state in constructor', this.state)
-
 		this.getCarbonForecast();
 	};
 
@@ -37,19 +34,13 @@ class Timeline extends React.Component {
 			body = this.state.postcode;
 		}
 
-		console.log('postcode', this.state.postcode, typeof this.state.postcode)
-		console.log('endpoint', endpoint)
-
 		let request = new XMLHttpRequest();
             request.open(method, endpoint, true);
             request.onreadystatechange = (ev) => {
                 if (request.readyState === 4) {
                     if (request.status >= 200 && request.status < 400) {
-                    	console.log(request.responseText);
                         let response = JSON.parse(request.responseText);
-						console.log('respnse', response);
                         this.setState({carbon : response.data})
-						console.log('state', this.state);
                     } else {
                     	console.warn('XHR error');
                         // Error :(

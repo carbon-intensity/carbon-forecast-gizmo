@@ -83,7 +83,7 @@ const getAreaForecast = (start, postcode) => {
 			host: `api.carbonintensity.org.uk`,
 			path: `/regional/intensity/${startISO}/fw24h/postcode/${postcode}`,
 			headers : {
-				'x-api-key' : '5a7be25b-582c-4503-9743-4feec9812424'
+				'x-api-key' : process.env.CARBON_API_KEY
 			}
 		}
 		console.log(endpoint)
