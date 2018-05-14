@@ -9,24 +9,22 @@ import style from './Timeline.css';
 class Timeline extends React.Component {
 	constructor(props) {
 		super(props);
+
+		let postcode = false;
+		const postcodeUnsanitised = window.location.pathname.replace(/\//g, '');
+		if (postcodeUnsanitised.length !== 0) {
+			postcode = postcodeUnsanitised;
+		}
+
 		this.state = {
 			carbon : [],
-			postcode: false
+			postcode: postcode
 		};
 
-		const postcodeUnsanitised = window.location.pathname.replace(/\//g, '');
-
 		console.log('postcodeUnsanitised', postcodeUnsanitised)
+		console.log('state in constructor', this.state)
 
-		if (postcodeUnsanitised.length !== 0) {
-			this.setState({
-				postcode: postcodeUnsanitised
-			});
-			this.getCarbonForecast();
-		}
-		else {
-			this.getCarbonForecast();
-		}
+		this.getCarbonForecast();
 	};
 
 	getCarbonForecast = () => {
