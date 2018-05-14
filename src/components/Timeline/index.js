@@ -22,16 +22,19 @@ class Timeline extends React.Component {
 					this.setState({
 						postcode: result.outcode
 					});
+					this.getCarbonForecast();
 				})
 				.catch ( (error) => {
 					console.warn(error);
 				});
 		}
-		this.getCarbonForecast();
+		else {
+			this.getCarbonForecast();
+		}
 	};
 
 	getCarbonForecast = () => {
-		let endpoint = `/api/`;
+		let endpoint = `https://5af968cfc965920efd155067--carbon-gizmo.netlify.com/api/`;
 		let method = 'GET';
 		let body = null;
 
