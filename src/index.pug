@@ -23,7 +23,7 @@ html(lang="en")
                 each val, index in googleAnalytics
                     - var token = val.split(';');
                     - var create = `ga('create', '${token[0]}', 'auto', '${token[1]}');`
-                    - var send = `ga('${token[1]}.send', 'pageview');`
+                    - var send = `ga('${token[1]}.send', { 'hitType' : 'pageview', 'page': '/' });`
                     - tokens.push({create: create, send: send});
 
                 script
