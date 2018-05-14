@@ -31,7 +31,7 @@ class Timeline extends React.Component {
 	};
 
 	getCarbonForecast = () => {
-		let endpoint = `http://localhost:9000/api/`;
+		let endpoint = `/api/`;
 		let method = 'GET';
 		let body = null;
 
