@@ -53,6 +53,7 @@ class Timeline extends React.Component {
             request.onreadystatechange = (ev) => {
                 if (request.readyState === 4) {
                     if (request.status >= 200 && request.status < 400) {
+                    	console.log(request.responseText);
                         let response = JSON.parse(request.responseText);
 						console.log('respnse', response);
                         this.setState({carbon : response.data})
