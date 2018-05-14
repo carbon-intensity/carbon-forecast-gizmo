@@ -43,7 +43,7 @@ class Timeline extends React.Component {
 			body = this.state.postcode;
 		}
 
-		console.log('postcode', this.state.postcode)
+		console.log('postcode', this.state.postcode, typeof this.state.postcode)
 
 		let request = new XMLHttpRequest();
             request.open(method, endpoint, true);
