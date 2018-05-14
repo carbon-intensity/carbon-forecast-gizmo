@@ -16,6 +16,8 @@ class Timeline extends React.Component {
 
 		const postcodeUnsanitised = window.location.pathname.replace(/\//g, '');
 
+		console.log('postcodeUnsanitised', postcodeUnsanitised)
+
 		if (postcodeUnsanitised.length !== 0) {
 			isPostcodeReal(postcodeUnsanitised)
 				.then( (result) => {
@@ -44,6 +46,7 @@ class Timeline extends React.Component {
 		}
 
 		console.log('postcode', this.state.postcode, typeof this.state.postcode)
+		console.log('endpoint', endpoint)
 
 		let request = new XMLHttpRequest();
             request.open(method, endpoint, true);
@@ -51,8 +54,9 @@ class Timeline extends React.Component {
                 if (request.readyState === 4) {
                     if (request.status >= 200 && request.status < 400) {
                         let response = JSON.parse(request.responseText);
+						console.log('respnse', response);
                         this.setState({carbon : response.data})
-						console.log(this.state)
+						console.log('state', this.state);
                     } else {
                     	console.warn('XHR error');
                         // Error :(
