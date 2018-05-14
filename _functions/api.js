@@ -135,7 +135,7 @@ const addCarbonIndex = (array) => {
 	            object.intensity.index = 'high';
 	            break;
 	        case (object.intensity.average > 180) :
-	            object.intensity.index = 'medium';
+	            object.intensity.index = 'moderate';
 	            break;
 	        case (object.intensity.average > 80) :
 	            object.intensity.index = 'low';
@@ -314,7 +314,7 @@ const mergeInHourBlocks = (arrayOfHalfHourBlocks) => {
 
 		if (moment(arrayOfHalfHourBlocks[i].to).isSame(endTime) === true) {
 			console.log(i)
-			newObj.intensity.average = newObj.intensity.average / loop;
+			newObj.intensity.average = Math.floor(newObj.intensity.average / loop);
 			newArray.push(newObj)
 
 			// Clear to start again
@@ -345,6 +345,7 @@ exports.handler = (event, context, callback) => {
 	let timeBounds = getTimeBounds(evenTime, duration);
 
 	if ( event.httpMethod === 'POST' ) {
+		console.log('POSTed')
 		checkPostcode(event.body)
 			.then( (response) => {
 				getAreaForecast(timeBounds.start, response.outcode.toLowerCase())
@@ -365,7 +366,7 @@ exports.handler = (event, context, callback) => {
 					    	headers : {
 					    		"Content-Type" : 'application/json; charset=utf-8',
 					    		"X-Powered-By" : 'Electricity',
-					    		"Access-Control-Allow-Methods": 'GET',
+					    		"Access-Control-Allow-Methods": 'POST',
 					    		"Access-Control-Allow-Origin" : '*'
 					    	},
 					    	body: JSON.stringify(responseWithHighestAndLowest)
@@ -382,7 +383,7 @@ exports.handler = (event, context, callback) => {
 			})
 	}
 	else {
-
+		console.log('GETed')
 		// Request the data from the API
 	    getCountryForecast(timeBounds.start, timeBounds.end)
 	    	.then( (response) => {

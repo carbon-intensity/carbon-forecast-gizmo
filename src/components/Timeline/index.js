@@ -40,6 +40,8 @@ class Timeline extends React.Component {
 			body = this.state.postcode;
 		}
 
+		console.log('postcode', this.state.postcode)
+
 		let request = new XMLHttpRequest();
             request.open(method, endpoint, true);
             request.onreadystatechange = (ev) => {
@@ -47,6 +49,7 @@ class Timeline extends React.Component {
                     if (request.status >= 200 && request.status < 400) {
                         let response = JSON.parse(request.responseText);
                         this.setState({carbon : response.data})
+						console.log(this.state)
                     } else {
                     	console.warn('XHR error');
                         // Error :(
