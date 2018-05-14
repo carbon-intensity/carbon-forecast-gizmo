@@ -297,8 +297,10 @@ const mergeInHourBlocks = (arrayOfHalfHourBlocks) => {
 	const hourBlocks = 2; // 2 hour blocks
 	const loop = hourBlocks * 2;
 
+	const lengthOfArray = arrayOfHalfHourBlocks.length;
+
 	let startTime = moment(arrayOfHalfHourBlocks[0].from);
-	let endTime = moment(startTime).add(2, 'hours');
+	let endTime = moment(startTime).add(hourBlocks, 'hours');
 
 	let newArray = [];
 	let newObj = {
@@ -307,20 +309,19 @@ const mergeInHourBlocks = (arrayOfHalfHourBlocks) => {
 		}
 	};
 
-	for (let i = 0; i < arrayOfHalfHourBlocks.length; i++) {
+	for (let i = 0; i < lengthOfArray; i++) {
 		newObj.from = startTime.toISOString();
 		newObj.to = endTime.toISOString();
 		newObj.intensity.average += arrayOfHalfHourBlocks[i].intensity.forecast;
 
 		if (moment(arrayOfHalfHourBlocks[i].to).isSame(endTime) === true) {
-			console.log(i)
 			newObj.intensity.average = Math.floor(newObj.intensity.average / loop);
 			newArray.push(newObj)
 
 			// Clear to start again
 			newObj = { intensity : { average: 0} };
 			startTime = endTime;
-			endTime = moment(startTime).add(2, 'hours');
+			endTime = moment(startTime).add(hourBlocks, 'hours');
 		}
 	}
 	return newArray;
