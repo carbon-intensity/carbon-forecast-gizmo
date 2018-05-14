@@ -13,40 +13,35 @@ class Timeline extends React.Component {
 			carbon : [],
 			postcode: false
 		};
-		this.getCarbonForecast();
 
 		const postcodeUnsanitised = window.location.pathname.replace(/\//g, '');
 
 		if (postcodeUnsanitised.length !== 0) {
 			isPostcodeReal(postcodeUnsanitised)
 				.then( (result) => {
-					console.log(result)
 					this.setState({
 						postcode: result.outcode
-					})
+					});
 				})
 				.catch ( (error) => {
 					console.warn(error);
 				});
 		}
+		this.getCarbonForecast();
 	};
 
 	getCarbonForecast = () => {
-		let endpoint = `http://localhost:9000/api/ip100bb`;
+		let endpoint = `http://localhost:9000/api/`;
+		let method = 'GET';
+		let body = null;
 
-		// fetch(endpoint)
-		// 	.then( (response) => {
-		// 		return response.json()
-		// 	})
-		// 	.then( (response) => {
-		// 		this.setState({carbon : response.data})
-		// 	})
-		// 	.catch( err => {
-		// 		console.warn(err)
-		// 	})
+		if (this.state.postcode !== false) {
+			method = 'POST';
+			body = this.state.postcode;
+		}
 
 		let request = new XMLHttpRequest();
-            request.open('GET', endpoint, true);
+            request.open(method, endpoint, true);
             request.onreadystatechange = (ev) => {
                 if (request.readyState === 4) {
                     if (request.status >= 200 && request.status < 400) {
@@ -58,7 +53,7 @@ class Timeline extends React.Component {
                     }
                 }
             };
-			request.send();
+			request.send(body);
 	};
 
 	render() {

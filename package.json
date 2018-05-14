@@ -5,8 +5,10 @@
   "scripts": {
     "test": "jest",
     "build": "webpack -p && webpack --config webpack.functions.js",
-    "start": "webpack-dev-server --open",
-    "start:functions": "netlify-lambda serve _functions",
+    "dev": "webpack-dev-server --open | netlify-lambda serve _functions",
+    "dev:site": "webpack-dev-server --open",
+    "dev:functions": "netlify-lambda serve _functions",
+    "site": "webpack -p",
     "functions": "webpack --config webpack.functions.js"
   },
   "author": "Ian James, ijames@wwf.org.uk",
@@ -26,6 +28,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^22.4.3",
+    "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "moment-timezone": "^0.5.16",
     "netlify-lambda": "^0.4.0",

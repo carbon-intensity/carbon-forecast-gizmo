@@ -1,5 +1,6 @@
 const moment = require('moment-timezone');
 const https = require('https');
+const _ = require('lodash');
 
 
 const leadingZero = function (n) {
@@ -52,6 +53,7 @@ const getCountryForecast = (start, end) => {
 		const endISO = moment(end).format();
 
 		const endpoint = `https://api.carbonintensity.org.uk/intensity/stats/${startISO}/${endISO}/2`;
+		console.log(endpoint)
 
 		https
 			.get(endpoint, (response) => {
@@ -74,10 +76,7 @@ const getCountryForecast = (start, end) => {
 const getAreaForecast = (start, postcode) => {
 
 	return new Promise( (resolve, reject) => {
-		const startISO = moment(start).format();
-
-		console.log('startISO', startISO)
-		console.log('postcode', postcode)
+		const startISO = moment(start).add(1, 'minute').toISOString();
 
 		// const endpoint = `https://api.carbonintensity.org.uk/intensity/stats/${startISO}/${endISO}/2`;
 		const endpoint = {
@@ -87,6 +86,7 @@ const getAreaForecast = (start, postcode) => {
 				'x-api-key' : '5a7be25b-582c-4503-9743-4feec9812424'
 			}
 		}
+		console.log(endpoint)
 		https
 			.get(endpoint, (response) => {
 				if ( response.statusCode >= 200 && response.statusCode < 400) {
@@ -124,6 +124,28 @@ const addHumanReadableTime = (array) => {
 		return object;
 	})
 };
+
+const addCarbonIndex = (array) => {
+	return array.map( (object, key) => {
+		switch (true) {
+			case (object.intensity.average > 380) :
+	            object.intensity.index = 'very high';
+	            break;
+	        case (object.intensity.average > 280) :
+	            object.intensity.index = 'high';
+	            break;
+	        case (object.intensity.average > 180) :
+	            object.intensity.index = 'medium';
+	            break;
+	        case (object.intensity.average > 80) :
+	            object.intensity.index = 'low';
+	            break;
+	        case (object.intensity.average > 0) :
+	            object.intensity.index = 'very low';
+	            break;
+		}
+	})
+}
 
 
 const addCarbonIndexAbbreviations = (array) => {
@@ -269,9 +291,40 @@ const checkPostcode = (postcode) => {
 			})
 			.end();
 	})
-
 }
 
+const mergeInHourBlocks = (arrayOfHalfHourBlocks) => {
+	const hourBlocks = 2; // 2 hour blocks
+	const loop = hourBlocks * 2;
+
+	let startTime = moment(arrayOfHalfHourBlocks[0].from);
+	let endTime = moment(startTime).add(2, 'hours');
+
+	let newArray = [];
+	let newObj = {
+		intensity: {
+			average: 0
+		}
+	};
+
+	for (let i = 0; i < arrayOfHalfHourBlocks.length; i++) {
+		newObj.from = startTime.toISOString();
+		newObj.to = endTime.toISOString();
+		newObj.intensity.average += arrayOfHalfHourBlocks[i].intensity.forecast;
+
+		if (moment(arrayOfHalfHourBlocks[i].to).isSame(endTime) === true) {
+			console.log(i)
+			newObj.intensity.average = newObj.intensity.average / loop;
+			newArray.push(newObj)
+
+			// Clear to start again
+			newObj = { intensity : { average: 0} };
+			startTime = endTime;
+			endTime = moment(startTime).add(2, 'hours');
+		}
+	}
+	return newArray;
+}
 
 exports.handler = (event, context, callback) => {
 
@@ -292,16 +345,21 @@ exports.handler = (event, context, callback) => {
 	let timeBounds = getTimeBounds(evenTime, duration);
 
 	if ( event.httpMethod === 'POST' ) {
-
 		checkPostcode(event.body)
 			.then( (response) => {
-						console.log('response', response)
 				getAreaForecast(timeBounds.start, response.outcode.toLowerCase())
 					.then( (response) => {
-						console.log(response.json())
-						return response.json();
-					})
-					.then( (response) => {
+						const dedupedResponse = _.uniqBy(response.data, 'response.data[0].from')[0];
+
+						const mergedIntoBlocks = mergeInHourBlocks(dedupedResponse.data);
+
+						addCarbonIndex(mergedIntoBlocks)
+						addCarbonIndexAbbreviations(mergedIntoBlocks)
+	    				addHumanReadableTime(mergedIntoBlocks);
+			    		addWhichDayItIs(mergedIntoBlocks);
+
+	    				const responseWithHighestAndLowest = findTheHighestAndLowestForecast({data: mergedIntoBlocks});
+
 					    callback(null, {
 					    	statusCode: 200,
 					    	headers : {
@@ -309,13 +367,14 @@ exports.handler = (event, context, callback) => {
 					    		"X-Powered-By" : 'Electricity',
 					    		"Access-Control-Allow-Methods": 'GET',
 					    		"Access-Control-Allow-Origin" : '*'
-
 					    	},
-					    	body: JSON.stringify( response )
+					    	body: JSON.stringify(responseWithHighestAndLowest)
+					    	// body: JSON.stringify( response.data )
 					    });
 					})
 					.catch( (error) => {
 						console.error('error1');
+						console.error(error)
 					})
 			})
 			.catch( error => {
