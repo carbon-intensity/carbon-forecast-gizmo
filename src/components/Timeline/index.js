@@ -19,16 +19,10 @@ class Timeline extends React.Component {
 		console.log('postcodeUnsanitised', postcodeUnsanitised)
 
 		if (postcodeUnsanitised.length !== 0) {
-			isPostcodeReal(postcodeUnsanitised)
-				.then( (result) => {
-					this.setState({
-						postcode: result.outcode
-					});
-					this.getCarbonForecast();
-				})
-				.catch ( (error) => {
-					console.warn(error);
-				});
+			this.setState({
+				postcode: postcodeUnsanitised
+			});
+			this.getCarbonForecast();
 		}
 		else {
 			this.getCarbonForecast();

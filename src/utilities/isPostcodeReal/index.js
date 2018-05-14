@@ -17,7 +17,7 @@ const isPostcodeReal = (postcode) => {
             if (response.status === 200) {
                 return {
                     result: true,
-                    outcode: response.result.outcode
+                    outcode: response.result.postcode
                 }
             }
             else {
