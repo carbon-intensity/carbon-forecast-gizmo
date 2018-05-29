@@ -122,7 +122,7 @@
 
 .indicator--very-low .indicator__house,
 .indicator--very-low .indicator__text {
-	bottom: 2em;
+	bottom: 0;
 }
 
 .indicator--very-high .indicator__house {

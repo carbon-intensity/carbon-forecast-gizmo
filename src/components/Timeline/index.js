@@ -1,33 +1,41 @@
 import React from "react";
 import Slice from '../Slice/';
 import Footer from '../Footer/';
+
+import isPostcodeReal from '../../utilities/isPostcodeReal/';
+
 import style from './Timeline.css';
 
 class Timeline extends React.Component {
 	constructor(props) {
 		super(props);
+
+		let postcode = false;
+		const postcodeUnsanitised = window.location.pathname.replace(/\//g, '');
+		if (postcodeUnsanitised.length !== 0) {
+			postcode = postcodeUnsanitised;
+		}
+
 		this.state = {
-			carbon : []
+			carbon : [],
+			postcode: postcode
 		};
+
 		this.getCarbonForecast();
 	};
 
-	getCarbonForecast = (duration) => {
+	getCarbonForecast = () => {
 		let endpoint = `/api/`;
+		let method = 'GET';
+		let body = null;
 
-		// fetch(endpoint)
-		// 	.then( (response) => {
-		// 		return response.json()
-		// 	})
-		// 	.then( (response) => {
-		// 		this.setState({carbon : response.data})
-		// 	})
-		// 	.catch( err => {
-		// 		console.warn(err)
-		// 	})
+		if (this.state.postcode !== false) {
+			method = 'POST';
+			body = this.state.postcode;
+		}
 
 		let request = new XMLHttpRequest();
-            request.open('GET', endpoint, true);
+            request.open(method, endpoint, true);
             request.onreadystatechange = (ev) => {
                 if (request.readyState === 4) {
                     if (request.status >= 200 && request.status < 400) {
@@ -39,7 +47,7 @@ class Timeline extends React.Component {
                     }
                 }
             };
-			request.send();
+			request.send(body);
 	};
 
 	render() {
