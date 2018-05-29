@@ -22,27 +22,27 @@
     force = false
 
 [[redirects]]
-    from = "/1.0.13--beta/*"
+    from = "/1.0.13--beta/"
     to = "/:splat"
-    status = 200
+    status = 301
     force = false
 
 [[redirects]]
-    from = "/1.0.14--beta/*"
+    from = "/1.0.14--beta/"
     to = "/:splat"
-    status = 200
+    status = 301
     force = false
 
 [[redirects]]
-    from = "/2.0.0/*"
+    from = "/2.0.0/"
     to = "/:splat"
-    status = 200
+    status = 301
     force = false
 
 [[redirects]]
-    from = "/2/*"
+    from = "/2/"
     to = "/:splat"
-    status = 200
+    status = 301
     force = false
    
 [[redirects]]
