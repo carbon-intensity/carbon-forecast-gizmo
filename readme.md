@@ -7,7 +7,7 @@
 To add this on your site, use the following snippet:
 
 ```html
-<iframe class="carbon-gizmo" src="https://carbon-gizmo.wwf.org.uk/2.0.0" width="100%" height="400px" scrolling="no" style="border:0"></iframe>
+<iframe class="carbon-gizmo" src="https://carbon-gizmo.wwf.org.uk/2" width="100%" height="400px" scrolling="no" style="border:0"></iframe>
 ```
 
 ## Build
