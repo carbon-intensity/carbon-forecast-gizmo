@@ -32,7 +32,7 @@
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.20",
     "netlify-lambda": "^0.4.0",
-    "prop-types": "^15.6.1",
+    "prop-types": "^15.6.2",
     "pug-html-loader": "^1.1.5",
     "raw-loader": "^0.5.1",
     "react": "^16.4.1",
