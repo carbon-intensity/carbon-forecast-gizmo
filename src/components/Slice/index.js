@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import styles from './Slice.css';
 import plug from 'svg-url-loader?iesafe&noquotes!./plug.svg';
 import unplug from 'svg-url-loader?iesafe&noquotes!./unplug.svg';
