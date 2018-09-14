@@ -35,7 +35,7 @@
     "prop-types": "^15.6.2",
     "pug-html-loader": "^1.1.5",
     "raw-loader": "^0.5.1",
-    "react": "^16.5.0",
+    "react": "^16.5.1",
     "react-dom": "^16.5.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
