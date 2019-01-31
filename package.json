@@ -29,7 +29,7 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^23.6.0",
     "lodash": "^4.17.11",
-    "moment": "^2.23.0",
+    "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
     "netlify-lambda": "^1.2.0",
     "prop-types": "^15.6.2",
