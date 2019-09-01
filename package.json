@@ -31,7 +31,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
-    "netlify-lambda": "^1.4.13",
+    "netlify-lambda": "^1.6.3",
     "prop-types": "^15.7.2",
     "pug-html-loader": "^1.1.5",
     "raw-loader": "^3.0.0",
