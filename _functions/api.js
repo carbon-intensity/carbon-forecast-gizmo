@@ -258,6 +258,8 @@ const isADurationAskedFor = (path) => {
 };
 
 const checkPostcode = (postcode) => {
+
+	console.log(postcode);
 	return new Promise( (resolve, reject) => {
 
 		const endpoint = `https://api.postcodes.io/postcodes/${postcode}/`;
@@ -347,6 +349,7 @@ exports.handler = (event, context, callback) => {
 
 	if ( event.httpMethod === 'POST' ) {
 		console.log('POSTed')
+		console.log(event.body);
 		checkPostcode(event.body)
 			.then( (response) => {
 				getAreaForecast(timeBounds.start, response.outcode.toLowerCase())
