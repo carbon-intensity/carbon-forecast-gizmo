@@ -380,7 +380,7 @@ exports.handler = (event, context, callback) => {
 					})
 			})
 			.catch( error => {
-				console.error('error2');
+				console.error(error.message);
 			})
 	}
 	else {
