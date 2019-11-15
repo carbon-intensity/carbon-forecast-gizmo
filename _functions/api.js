@@ -1,7 +1,7 @@
 const moment = require('moment-timezone');
 const https = require('https');
 const _ = require('lodash');
-
+import querystring from "querystring";
 
 const leadingZero = function (n) {
     return (n < 10) ? ("0" + n) : n;
@@ -349,8 +349,11 @@ exports.handler = (event, context, callback) => {
 
 	if ( event.httpMethod === 'POST' ) {
 		console.log('POSTed')
-		console.log(event.body);
-		checkPostcode(event.body)
+
+		const params = querystring.parse(event.body);
+		const postcode = params.postcode
+
+		checkPostcode(postcode)
 			.then( (response) => {
 				getAreaForecast(timeBounds.start, response.outcode.toLowerCase())
 					.then( (response) => {
