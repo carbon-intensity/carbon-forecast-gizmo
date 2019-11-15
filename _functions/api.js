@@ -347,7 +347,7 @@ exports.handler = (event, context, callback) => {
 
 	if ( event.httpMethod === 'POST' ) {
 		console.log('POSTed')
-		checkPostcode(event.body)
+		checkPostcode(event.body.postcode)
 			.then( (response) => {
 				getAreaForecast(timeBounds.start, response.outcode.toLowerCase())
 					.then( (response) => {
