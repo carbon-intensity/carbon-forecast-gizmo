@@ -1,4 +1,3 @@
-}
 const moment = require('moment-timezone');
 const https = require('https');
 const _ = require('lodash');
