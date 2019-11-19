@@ -1,3 +1,4 @@
+}
 const moment = require('moment-timezone');
 const https = require('https');
 const _ = require('lodash');
@@ -83,7 +84,7 @@ const getAreaForecast = (start, postcode) => {
 			host: `api.carbonintensity.org.uk`,
 			path: `/regional/intensity/${startISO}/fw24h/postcode/${postcode}`,
 			headers : {
-				'x-api-key' : process.env.CARBON_API_KEY
+				'x-api-key' : "5a7be25b-582c-4503-9743-4feec9812424"//process.env.CARBON_API_KEY
 			}
 		}
 		console.log(endpoint)
@@ -258,8 +259,6 @@ const isADurationAskedFor = (path) => {
 };
 
 const checkPostcode = (postcode) => {
-
-	console.log(postcode);
 	return new Promise( (resolve, reject) => {
 
 		const endpoint = `https://api.postcodes.io/postcodes/${postcode}/`;
@@ -350,16 +349,16 @@ exports.handler = (event, context, callback) => {
 	if ( event.httpMethod === 'POST' ) {
 		console.log('POSTed')
 
-		const params = querystring.parse(event.body);
-		const postcode = params.postcode
+		const params = JSON.parse(event.body);
+  		const postcode = params.postcode || '';
 
 		checkPostcode(postcode)
 			.then( (response) => {
 				getAreaForecast(timeBounds.start, response.outcode.toLowerCase())
 					.then( (response) => {
-						const dedupedResponse = _.uniqBy(response.data, 'response.data[0].from')[0];
+						//const dedupedResponse = _.uniqBy(response.data, 'response.data[0].from')[0];
 
-						const mergedIntoBlocks = mergeInHourBlocks(dedupedResponse.data);
+						const mergedIntoBlocks = mergeInHourBlocks(response.data.data);
 
 						addCarbonIndex(mergedIntoBlocks)
 						addCarbonIndexAbbreviations(mergedIntoBlocks)
@@ -377,7 +376,6 @@ exports.handler = (event, context, callback) => {
 					    		"Access-Control-Allow-Origin" : '*'
 					    	},
 					    	body: JSON.stringify(responseWithHighestAndLowest)
-					    	// body: JSON.stringify( response.data )
 					    });
 					})
 					.catch( (error) => {
@@ -386,7 +384,7 @@ exports.handler = (event, context, callback) => {
 					})
 			})
 			.catch( error => {
-				console.error('error2');
+				console.error(error.message);
 			})
 	}
 	else {
