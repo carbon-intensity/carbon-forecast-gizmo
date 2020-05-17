@@ -37,7 +37,7 @@
     "raw-loader": "^3.1.0",
     "react": "^16.10.1",
     "react-dom": "^16.13.0",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "request-promise-native": "^1.0.7",
     "serverless-webpack": "^5.3.1",
     "style-loader": "^1.1.3",
