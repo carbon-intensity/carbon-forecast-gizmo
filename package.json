@@ -34,7 +34,7 @@
     "netlify-lambda": "^1.6.3",
     "prop-types": "^15.7.2",
     "pug-html-loader": "^1.1.5",
-    "raw-loader": "^3.1.0",
+    "raw-loader": "^4.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.0",
     "request": "^2.88.2",
