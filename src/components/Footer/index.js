@@ -14,7 +14,7 @@ class Footer extends React.Component {
                     <img src={edf} alt="Environment Defense Fund logo" role="presentation" />
                     <span className={style.vh}>Environment Defense Fund</span>
                 </a>
-                <a className={style['logo-link--ng']} href="http://www.nationalgrid.com/uk/" target="_blank">
+                <a style="height:100%;" className={style['logo-link--ng']} href="http://www.nationalgrid.com/uk/" target="_blank">
                     <img src={neso} alt="National Grid logo" role="presentation" />
                     <span className={style.vh}>National Grid</span>
                 </a>
